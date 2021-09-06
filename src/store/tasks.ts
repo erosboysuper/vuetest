@@ -15,19 +15,15 @@ const showListData: Ref<ListItem[]> = ref([]);
 export default function useTasksStore() {
     const setTasksList = (datas: TasksGetFromDatabaseInfo | string, pageInfo: TasksSearchParam | number, currentPage: number) => {
         let buffer: ListItem[] = [];
-        console.log(currentPage, "currentpage");
-
+        
         if (typeof datas === 'object') {
-            // let currentPage: number;
-            // typeof pageInfo === 'number' ? currentPage = pageInfo : currentPage = pageInfo.skip;
-
             let count = 0;
             datas.tasks.map((data, id) => {
                 if (id === listItemsCount) {
                     tasksList.value[currentPage] = buffer;
                     buffer = [];
                 }
-
+                
                 buffer.push({
                     title: data.title,
                     description: data.description,
@@ -39,18 +35,22 @@ export default function useTasksStore() {
                 count = id;
                 return true;
             })
+            
             if (count + 1 > listItemsCount) tasksList.value[currentPage + 1] = buffer;
+            if (count + 1 < listItemsCount) tasksList.value[currentPage] = buffer;
+
             showListDataBuffer.value = tasksList.value[currentPage];
             sessionStorage.setItem(`currentPage`, currentPage.toString());
         } else {
             let currentPage: number;
             typeof pageInfo === 'number' ? currentPage = pageInfo : currentPage = pageInfo.skip;
-
+            
             showListDataBuffer.value = tasksList.value[currentPage];
-
+            
             sessionStorage.setItem(`currentPage`, currentPage.toString());
         }
-
+        console.log(showListDataBuffer.value, "currentpage");
+        
         showListData.value = [];
 
         showListDataBuffer.value.map((data) => {

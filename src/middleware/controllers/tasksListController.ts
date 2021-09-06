@@ -58,6 +58,7 @@ const getTasksList = async (data: TasksSearchParam | number) => {
     return await api.get<TasksGetFromDatabaseInfo>(query)
         .then((response) => {
             sessionStorage.setItem('maxPage', (response.data.count + skip).toString());
+            console.log(query, response.data, "jong test");
             if (typeof data === 'number') {
                 setPagination(data);
                 setTasksList(response.data, data, data);
@@ -65,10 +66,8 @@ const getTasksList = async (data: TasksSearchParam | number) => {
             else {
                 setPagination(data.skip);
                 data.skip ++;
-                console.log(data.skip, "current control")
                 setTasksList(response.data, data, first);
             }
-            console.log(query, response.data, sessionStorage.getItem('maxPage'), "jong test");
             return response
         }).catch((error) => {
             console.log(error)
