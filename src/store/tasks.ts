@@ -49,7 +49,6 @@ export default function useTasksStore() {
             
             sessionStorage.setItem(`currentPage`, currentPage.toString());
         }
-        console.log(showListDataBuffer.value, "currentpage");
         
         showListData.value = [];
 

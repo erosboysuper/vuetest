@@ -8,10 +8,8 @@ const showItems = 5;
 
 export default function usePagination() {
     const setPagination = (num: number) => {
-        console.log(num, "jong page");
         let endPage;
         const maxPage = (Number(sessionStorage.getItem('maxPage')) + (listItemsCount - Number(sessionStorage.getItem('maxPage')) % listItemsCount)) / listItemsCount;
-        console.log("jong maxpage", maxPage);
 
         paginationStore.value = [];
 
